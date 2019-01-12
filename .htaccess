@@ -1,0 +1,63 @@
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+Options All -Indexes
+
+# -----------------------------------------------------------------------------
+#      Redirects
+# -----------------------------------------------------------------------------
+
+# GET /api/wallet/create
+# POST - eth_wallet, auth_token, nonce
+# PERMISSION - wright
+RewriteRule ^api/([^/]*)/create$ /?api=$1&create [L]
+# GET /api/wallet/get_user_info POST -
+# test: /api/wallet/get_user_info=0x
+# result: {"status":"Error","message":"User not found","result":[]}
+RewriteRule ^api/([^/]*)/get_user_info=([^/]*)$ /?api=$1&get_user_info=$2 [L]
+# GET /api/wallet/get_btc_address
+RewriteRule ^api/([^/]*)/get_btc_address=([^/]*)$ /?api=$1&get_btc_address=$2 [L]
+# GET /api/wallet/get_btc_balance
+RewriteRule ^api/([^/]*)/get_btc_balance=([^/]*)$ /?api=$1&get_btc_balance=$2 [L]
+# GET /api/wallet/get_bonus_address
+RewriteRule ^api/([^/]*)/get_bonus_address=([^/]*)$ /?api=$1&get_bonus_address=$2 [L]
+# GET /api/wallet/get_bonus_balance
+RewriteRule ^api/([^/]*)/get_bonus_balance=([^/]*)$ /?api=$1&get_bonus_balance=$2 [L]
+#Получаем бонусный баланс
+# GET /api/wallet/update_bonus_balance
+# POST - eth_wallet, new_balance, auth_token, nonce
+# PERMISSION - read
+RewriteRule ^api/([^/]*)/update_bonus_balance$ /?api=$1&update_bonus_balance [L]
+# GET /api/wallet/get_btc_priv_key
+# POST - auth_token, nonce
+# PERMISSION - wright
+RewriteRule ^api/([^/]*)/get_btc_priv_key=([^/]*)$ /?api=$1&get_btc_priv_key=$2 [L]
+# GET /api/wallet/get_bonus_priv_key
+# POST - auth_token, nonce
+# PERMISSION - wright
+RewriteRule ^api/([^/]*)/get_bonus_priv_key=([^/]*)$ /?api=$1&get_bonus_priv_key=$2 [L]
+# GET /api/wallet/delete_by_address
+# POST - auth_token, nonce
+# PERMISSION - wright
+RewriteRule ^api/([^/]*)/delete_by_address=([^/]*)$ /?api=$1&delete_by_address=$2 [L]
+# GET - /api/user/update_user
+# POST - auth_token, nonce
+# PERMISSION - wright
+RewriteRule ^api/([^/]*)/update_user$ /?api=$1&update_user [L]
+# GET - /api/user/update_user
+# POST - auth_token, nonce
+# PERMISSION - wright
+RewriteRule ^api/([^/]*)/gen_user$ /?api=$1&gen_user [L]
+
+#ErrorDocument 403 /404.php
+#ErrorDocument 404 /404.php
+#ErrorDocument 500 /404.php
+
+# Protect the htaccess file
+<Files .htaccess>
+Order Allow,Deny
+Deny from all
+</Files>

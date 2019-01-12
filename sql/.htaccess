@@ -1,0 +1,15 @@
+RewriteEngine On
+RewriteBase /
+
+Options All -Indexes
+
+##RewriteRule ^api/([^/]*)/get_address=([^/]*)$ /?api=$1&get_address=$2 [L]
+ErrorDocument 403 /404.php
+ErrorDocument 404 /404.php
+ErrorDocument 500 /404.php
+
+# Protect the htaccess file
+<Files .htaccess>
+Order Allow,Deny
+Deny from all
+</Files>
